@@ -155,19 +155,6 @@ function draw() {
     ellipse(0, 0, r * 2)
     circle.style("color", "var(--light-blue)")
     circle.style('background-color', "var(--dark)")
-    ellipse(x, y, r * 2)
-
-    ellipse(x, y, 10, 10)
-    push()
-    translate(x, y)
-    line(-r, 0, r, 0)
-    line(0, -r, 0, r)
-    stroke(200, 60)
-    ellipse(x, y, r * 2)
-    stroke('red')
-    rotate(angle)
-    line(0, -r, 0, r)
-    pop()
 
   }
   if (ismid) {
@@ -352,7 +339,7 @@ function showSmalle() {
   stroke("red")
   ellipse(0, y / 2, 10, 10)
 
-  line(x/2,0,0,y/2)
+  line(x / 2, 0, 0, y / 2)
 }
 function showSmallL() {
   stroke(0)
