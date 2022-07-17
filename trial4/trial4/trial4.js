@@ -155,7 +155,7 @@ function draw() {
     ellipse(0, 0, r * 2)
     circle.style("color", "var(--light-blue)")
     circle.style('background-color', "var(--dark)")
-
+    
   }
   if (ismid) {
     stroke(255)
