@@ -1,0 +1,86 @@
+:root{
+  --light-blue:rgb(112, 248, 186);
+  --dark:rgb(30, 16, 20);
+  --silent:rgb(124, 180, 184);
+  --purple:rgb(202, 60, 255);
+  --mid-gray:rgb(8, 76, 97);
+  --carrot:rgb(234, 144, 16)
+}
+.mybutton{
+  background-color: var(--light-blue);
+  display:block;
+  margin:10px;
+  padding:10px;
+  font-size: 20px;
+  font-weight: bold; 
+  font-family:Georgia;
+  transition: background-color 0.15s;
+  transition: color 0.15s; 
+  border-radius:8px;
+}
+#box{
+  margin-inline:auto;
+  margin:30px auto;
+}
+ p{
+  font-size:60px;
+  color:rgb(192,197,209);
+  font-family: Georgia;
+ }
+ #t2{
+  color:rgb(255,255,255);
+  font-size:40px;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+ }
+
+ input{
+  display:block;
+  font-size:32px;
+  background-color:var(--light-blue);
+  color:var(--dark);
+  border:double black 5px;
+  border-radius:10px;
+  width:10vw;
+  margin:10px;
+}
+ 
+ button{
+  display:block;
+   font-size:32px;
+   width:10vw
+   
+ }
+ body{
+  background-image: url(R.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+ }
+ .contianer{
+  display:grid;
+  grid-template-columns:500px 1fr;
+  background-color:rgba(10,20,20,0.5)
+ }
+ #mybutton{
+  display:inline-block;
+  background-color: rgba(10,20,20,0.55);
+}
+.label{
+  background-color: var(--light-blue);
+  display:inline-block;
+  margin:10px;
+  padding:10px;
+  font-size: 20px;
+  font-weight: bold; 
+  font-family:Georgia;
+  transition: background-color 0.15s;
+  transition: color 0.15s; 
+  border-radius:8px;
+ }
+ .slider{
+  display: inline-block;
+ }
+ /* #box{
+  background-color:rgba(10,20,20,0.5)
+ } */
+ 
