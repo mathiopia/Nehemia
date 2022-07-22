@@ -19,8 +19,7 @@
   border-radius:8px;
 }
 .mybutton:hover{
-  background-color:var(--dark);
-  color:var(--light-blue);
+  box-shadow: 1px 3px 30px;
 }
 .mybutton:active{
   background-color:white;
@@ -32,10 +31,8 @@
 
 }
 #defaultCanvas0{
-  /* display:inline-block; */
   margin :20px;
-  /* border-radius:10px; 
-  border:double 10px; */
+
 }
 
 body{

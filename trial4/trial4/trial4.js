@@ -20,6 +20,8 @@ let si = []
 let co = []
 let arrx = []
 let arry = []
+let sins = []
+let coss = []
 let slider
 let is_small = false
 let is_smallL = false
@@ -29,11 +31,17 @@ let y
 let balls
 let isballs = false
 let multi = 1
-let d
+let sincirclebutton
+let isSincicle = false
 
 function setup() {
   let canv = createCanvas(1000, 1000)
   canv.parent('can-container')
+
+  sincirclebutton = createButton("make circle")
+  sincirclebutton.addClass("mybutton")
+  sincirclebutton.mousePressed(() => isSincicle = !isSincicle)
+  sincirclebutton.parent("button_container")
 
   cross = createButton(" cross ")
   cross.addClass("mybutton")
@@ -115,8 +123,6 @@ function setup() {
   slider2.addClass("slider")
   slider2.size(300, 10)
 
-  // setInterval(() => multi += 0.1, 3000)
-  // d=createSlider(0,1.6,0.5,0.001)
 
   cr = width / 40
 
@@ -127,11 +133,12 @@ function draw() {
   clear()
   Style()
   translate(width / 2, height / 2)
-  // rotateZ(PI/3)
   x = r * cos(angle)
   y = r * sin(angle)
   co.unshift(x)
   si.unshift(y)
+  sins.unshift(y)
+  coss.unshift(x)
   noFill()
   stroke(255)
   strokeWeight(3.5)
@@ -143,19 +150,12 @@ function draw() {
 
     cross.style("color", "var(--light-blue)")
     cross.style('background-color', "var(--dark)")
-    let slope = -y / x
-    let tt = slope * (x - 50) + y
-    // line(x,0,50,tt) 
-    line(x, 0, 0, y)
-
-
   }
   if (iscircle) {
     strokeWeight(5)
     ellipse(0, 0, r * 2)
     circle.style("color", "var(--light-blue)")
     circle.style('background-color', "var(--dark)")
-    
   }
   if (ismid) {
     stroke(255)
@@ -175,16 +175,23 @@ function draw() {
     mid.style('background-color', "var(--dark)")
 
   }
+
   if (isball) showball()
   if (isSinGraph) showSinGraph()
   if (isCosGraph) showCosGraph()
   if (isvert) showCosvert()
   if (isballs) drawballs()
-  noStroke()
-  fill('blue')
-  ellipse(x, 0, cr * 1.25, cr * 1.25)
-  fill('red')
-  ellipse(0, y, cr * 1.25, cr * 1.25)
+  if (isSincicle) showSinCircle()
+  if (!isSincicle) {
+    // noStroke()
+    // fill("blue")
+    // ellipse(x, 0, 30)
+    // fill('red')
+    // ellipse(0, y, 30)
+    ellipse(0,height)
+
+  }
+
   angle -= slider2.value()
 
 
@@ -211,6 +218,12 @@ function Style() {
 
   mid.style("background-color", "var(--light-blue)")
   mid.style('color', "var(--dark)")
+
+  sincirclebutton.style("background-color", "var(--light-blue)")
+  sincirclebutton.style('color', "var(--dark)")
+
+  balls.style("background-color", "var(--light-blue)")
+  balls.style('color', "var(--dark)")
 }
 
 function showCross() {
@@ -239,10 +252,7 @@ function drawballs() {
   noFill()
   ellipse(0, 0, r * 2)
   let num
-  // if (multi % 4 != 0) {
   num = 360 / 5
-  // }
-  // else {num = 300 / multi +2}
 
   for (let i = 0; i < 360; i += num) {
     push()
@@ -267,6 +277,8 @@ function drawballs() {
     ellipse(0, 0, r * 2)
     angleMode(RADIANS)
     pop()
+    balls.style("color", "var(--light-blue)")
+    balls.style('background-color', "var(--dark)")
 
   }
 }
@@ -292,17 +304,16 @@ function showCosGraph() {
   cosGraph.style('background-color', "var(--dark)")
   beginShape()
   let costime = 0
-  for (let i = 0; i < co.length; i += 1) {
-    noFill()
-    // fill(0,0,255)
-    stroke(0, 0, 255)
+  stroke(0, 0, 255)
+  for (let i = 0; i < co.length; i += 10) {
     vertex(costime, -co[i])
-    ellipse(costime, -co[i], 6)
-    costime += 1
+    noFill()
+    costime += 10
   }
+  endShape()
   stroke(255)
   line(x, 0, 0, -co[0])
-  endShape()
+
 }
 
 function showCosvert() {
@@ -315,7 +326,7 @@ function showCosvert() {
     noFill()
     stroke(0, 0, 255)
     vertex(co[i], vert)
-    vert += 0.3
+    vert += 1
   }
   endShape()
 }
@@ -344,4 +355,41 @@ function showSmalle() {
 function showSmallL() {
   stroke(0)
   line(0, 0, x / 2, y / 2)
+}
+
+function showSinCircle() {
+  noStroke()
+  fill("red")
+  ellipse(0, y, 30)
+  fill("blue")
+  ellipse(x + r, r, 30)
+  stroke(0)
+  fill(255)
+  ellipse(x + r, y, 10)
+
+
+  stroke('blue')
+  line(x + r, y, x + r, r)
+  stroke('red')
+  line(0, y, x + r, y)
+  stroke(255)
+  line(0, r, x + r, r)
+
+  line(0, r, 0, y)
+
+  beginShape()
+  stroke(255)
+  noFill()
+  for (let i = 0; i < sins.length; i++) {
+    vertex(coss[i] + r, sins[i])
+  }
+  if (coss.length > 200) {
+    coss.pop()
+    sins.pop()
+  }
+  endShape()
+  sincirclebutton.style("color", "var(--light-blue)")
+  sincirclebutton.style('background-color', "var(--dark)")
+
+
 }
