@@ -8,7 +8,7 @@
 }
 .mybutton{
   background-color: var(--light-blue);
-  display:block;
+  display:flex;
   margin:10px;
   padding:10px 20px;
   font-size: 20px;
@@ -27,9 +27,12 @@
 }
 .container{
   display:grid;
-  grid-template-columns:500px 1fr;
-
+  height:100%;
+  grid-template-columns:1fr 3fr;
+  background-color:rgba(0,0,0,0.5);
+  position:absolute;
 }
+
 #defaultCanvas0{
   margin :20px;
 
@@ -39,6 +42,8 @@ body{
   background-image:url(/R.jpg);
   background-size: cover;
   background-repeat:no-repeat;
+  justify-items: center;
+  align-items: center;
 }
 
 .label{
@@ -71,5 +76,29 @@ p{
   font-family: 'Courier New', Courier, monospace;
  }
  #can-container{
-  background-color:rgba(0,0,0,0.3)
+  background-color:rgba(0,0,0,0.2)
  }
+#begin{
+  height:100%;
+  width:100%; 
+  background-color:black;
+  position:absolute;
+}
+#begin2 {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255,0,0,0.2);
+  position: absolute;
+}
+#begin3 {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(202, 202, 12,0.2);
+  position: absolute;
+}
+#begin4 {
+  height: 100%;
+  width: 100%;
+  background-color:rgba(0,200,0,0.2);
+  position: absolute;
+}

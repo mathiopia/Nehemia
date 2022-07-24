@@ -35,15 +35,28 @@ let sincirclebutton
 let isSincicle = false
 
 function setup() {
-  let canv = createCanvas(1000, 1000)
+  let canv = createCanvas(1600, 1000)
   canv.parent('can-container')
+  $(".container").hide()
+  $("#begin2").hide()
+  $("#begin3").hide()
+  $("#begin4").hide()
+  $("#begin").hide(500)
+  $("#begin2").show(1000)
+  $("#begin3").show(2000)
+  $("#begin4").show(3000)
+  $("#begin2").hide(2000)
+  $("#begin3").hide(3000)
+  $("#begin4").hide(4000)
+  $(".container").show(5500)
+
 
   sincirclebutton = createButton("make circle")
   sincirclebutton.addClass("mybutton")
   sincirclebutton.mousePressed(() => {
     isSincicle = !isSincicle
     sins.length = 0
-    coss.length=0
+    coss.length = 0
   })
   sincirclebutton.parent("button_container")
 
@@ -186,7 +199,7 @@ function draw() {
   if (isvert) showCosvert()
   if (isballs) drawballs()
   if (isSincicle) showSinCircle()
- else  {
+  else {
     noStroke()
     fill("blue")
     ellipse(x, 0, 30)
@@ -339,7 +352,6 @@ function showSmallc() {
   beginShape()
   stroke(255)
   for (let i = 0; i < arrx.length; i += 10) {
-    // vertex(arrx[i],arry[i])
     ellipse(arrx[i], arry[i], 10, 10)
   }
   if (arrx.length > 200) {arrx.pop(); arry.pop()}
@@ -399,6 +411,7 @@ function showSinCircle() {
   }
   sincirclebutton.style("color", "var(--light-blue)")
   sincirclebutton.style('background-color', "var(--dark)")
-
-
 }
+
+
+
