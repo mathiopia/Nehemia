@@ -64,8 +64,7 @@ let slider2
   }
   
   function draw() {
-      r= slider2.value();
-      // background(silent);
+      r= slider2.value()
       clear()
       translate(width/2,height/2);
       let x= r*cos(angle);
@@ -142,8 +141,8 @@ let slider2
     }
   function showBySlider(){
      isSlider=!isSlider
-     if (isSlider){
-       makeSlider.html("Slider Mode is on");
+    if (isSlider) {
+       makeSlider.html("you changed to slider");
        makeSlider.style("background-color",dark);
        makeSlider.style("color",light_blue);
    }

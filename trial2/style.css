@@ -31,7 +31,7 @@
 .container{
   display:grid;
   grid-template-columns: 500px 1fr;
-  background-color:rgba(124, 180, 184,0.3)
+  background-color:rgba(0,0,0,0.3)
 
 }
 body{

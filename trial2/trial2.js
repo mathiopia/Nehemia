@@ -65,8 +65,8 @@ function setup() {
   input_box.parent("box")
 
 
+  cr = width / 40
 
-  cr=width/40
 
 }
 

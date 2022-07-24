@@ -40,7 +40,11 @@ function setup() {
 
   sincirclebutton = createButton("make circle")
   sincirclebutton.addClass("mybutton")
-  sincirclebutton.mousePressed(() => isSincicle = !isSincicle)
+  sincirclebutton.mousePressed(() => {
+    isSincicle = !isSincicle
+    sins.length = 0
+    coss.length=0
+  })
   sincirclebutton.parent("button_container")
 
   cross = createButton(" cross ")
@@ -182,14 +186,13 @@ function draw() {
   if (isvert) showCosvert()
   if (isballs) drawballs()
   if (isSincicle) showSinCircle()
-  if (!isSincicle) {
-    // noStroke()
-    // fill("blue")
-    // ellipse(x, 0, 30)
-    // fill('red')
-    // ellipse(0, y, 30)
-    ellipse(0,height)
-
+ else  {
+    noStroke()
+    fill("blue")
+    ellipse(x, 0, 30)
+    fill('red')
+    ellipse(0, y, 30)
+    ellipse(0, height)
   }
 
   angle -= slider2.value()
@@ -358,6 +361,13 @@ function showSmallL() {
 }
 
 function showSinCircle() {
+
+  push()
+  stroke(180)
+  strokeWeight(10)
+  line(0, r, r + r, r)
+  line(0, r, 0, -r)
+  pop()
   noStroke()
   fill("red")
   ellipse(0, y, 30)
@@ -366,28 +376,27 @@ function showSinCircle() {
   stroke(0)
   fill(255)
   ellipse(x + r, y, 10)
-
+  stroke(255)
 
   stroke('blue')
   line(x + r, y, x + r, r)
   stroke('red')
   line(0, y, x + r, y)
-  stroke(255)
-  line(0, r, x + r, r)
-
-  line(0, r, 0, y)
 
   beginShape()
+  stroke('green')
   stroke(255)
+  strokeWeight(8)
   noFill()
   for (let i = 0; i < sins.length; i++) {
     vertex(coss[i] + r, sins[i])
   }
-  if (coss.length > 200) {
+
+  endShape()
+  if (coss.length > 200 || sins.length > 200) {
     coss.pop()
     sins.pop()
   }
-  endShape()
   sincirclebutton.style("color", "var(--light-blue)")
   sincirclebutton.style('background-color', "var(--dark)")
 

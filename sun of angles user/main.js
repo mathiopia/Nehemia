@@ -119,7 +119,8 @@ function setup() {
 }
 
 function draw() {
-    background(silent);
+    // background(silent);
+    clear()
     Style()
     if(start){
         startB.style('background-color',dark)
@@ -224,7 +225,11 @@ function draw() {
             rotate(a);
             rect(-15, -15, 15, 15)
         pop()
-
+        boolX = false
+        boolY = false
+        boolXY = false
+        start = false
+        
 
         
     }
@@ -257,7 +262,10 @@ function draw() {
         rotate(-PI/2)
         text("Sin (X + Y)",0,0)
         pop()
-        text("cos(X + Y)",xb/2-20,oy+20)
+        text("cos(X + Y)", xb / 2 - 20, oy + 20)
+        boolYo = false
+        start = false
+        boolX=false
         }
     if(boolExt){
         extention.style('background-color',dark)

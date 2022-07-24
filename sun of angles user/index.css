@@ -28,8 +28,8 @@
 
 h1{
   font-size:60px;
-  color:rgb(192,197,209);
-  /* color:var(--silent) */
+  /* color:rgb(192,197,209); */
+  color:var(--carrot);
   font-family: Georgia;
   font-weight: normal;
   font-style:italic;

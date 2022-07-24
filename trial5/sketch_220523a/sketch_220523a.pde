@@ -30,7 +30,7 @@ function draw() {
   //cross
   line(-width,0,width,0);
   line(0,-height,0,height);
-  // center circle
+// center circle
   fill('blue');
   // ellipse(x,y,cr,cr);
   // fill('yellow')
