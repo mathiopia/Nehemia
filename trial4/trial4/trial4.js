@@ -37,18 +37,27 @@ let isSincicle = false
 function setup() {
   let canv = createCanvas(1600, 1000)
   canv.parent('can-container')
-  $(".container").hide()
-  $("#begin2").hide()
-  $("#begin3").hide()
-  $("#begin4").hide()
-  $("#begin").hide(500)
-  $("#begin2").show(1000)
-  $("#begin3").show(2000)
-  $("#begin4").show(3000)
-  $("#begin2").hide(2000)
-  $("#begin3").hide(3000)
-  $("#begin4").hide(4000)
-  $(".container").show(5500)
+  $(Document).ready(() => {
+    $(".container").hide()
+    $("#begin2").hide()
+    $("#begin3").hide()
+    $("#begin4").hide()
+    $("#begin").hide(500)
+    $("#begin2").show(500)
+    $("#begin3").show(1000)
+    $("#begin4").show(2000)
+    setTimeout(() => {
+
+      $("#begin2").fadeOut(2000)
+      $("#begin3").fadeOut(3000)
+      $("#begin4").fadeOut(4000)
+      $(".container").show(3000)
+
+    }, 1000)
+    
+  })
+
+
 
 
   sincirclebutton = createButton("make circle")
@@ -72,7 +81,7 @@ function setup() {
 
   ball = createButton("ball")
   ball.addClass("mybutton")
-  ball.mousePressed(() => isball = !isball)
+  // ball.mousePressed(() => isball = !isball)
   ball.parent("button_container")
 
   mid = createButton("mid point")
