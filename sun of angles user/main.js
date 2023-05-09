@@ -50,7 +50,7 @@ let exj=0;
 let exx=0;
 let exy=125;
 function setup() {
-    let can=createCanvas(1000, 1000);
+    let can=createCanvas(1000, windowHeight*0.91);
     can.parent("container")
     can.style("width","50vw")
     light_blue= color(112, 248, 186);
@@ -119,44 +119,47 @@ function setup() {
 }
 
 function draw() {
-    // background(silent);
-    clear()
+    background(silent);
+    // clear()
     Style()
+    if (boolAll == false) boolExt = false
     if(start){
         startB.style('background-color',dark)
         startB.style('color',light_blue)
-        fill(255);
+        // fill(255);
+        noFill()
         strokeWeight("3")
         stroke(255, 32, 110)
         triangle(ox, oy, xa, ya, xa, oy)
         noFill()
         arc(ox, oy, 150, 150, a, 0)
         rect(xa-15, oy-15, 15, 15)
-        fill(red)
+        fill("white")
         stroke(0)
-        textSize(15)
+        textSize(20)
         tax=89*cos(a/2);
         tay=89*sin(a/2)+oy
         text("x", tax, tay);
-        fill(255,255,255);
-        stroke(252,166,9);
-        strokeWeight(3);
+        // fill(255,255,255);
+        // stroke(252,166,9);
+        // strokeWeight(3);
     
         push()
         translate(ox+xa+100,oy)
         stroke(blue)
-        fill(0)
-        textSize(18);
+        fill("white")
+        textSize(25);
         text('sin y',(xa) +50, (-ya)+ya/2)
         text('cos y', (xa)/2, 20)
         text('1', (xa)/2,-(ya)/2-20)
         rotate(PI/6)
-        fill(255,255,255);
+        // fill(255,255,255);
+        noFill()
         stroke(blue);
         strokeWeight(3);
         triangle(0, 0, xa-ox, ya-oy, xb-ox, yb-oy)
-        fill(0)
-        textSize(19)
+        fill("white")
+        textSize(20)
         tbx=80*cos(b-a/2)
         tby=80*sin(b-a/2)
         text("y", tbx, tby);
@@ -388,16 +391,18 @@ function draw() {
         translate(transyo,oy)
         push()
         rotate(PI/6)
-        fill(255,255,255,opacity2);
+        // fill(255,255,255,opacity2);
+       noFill()
         stroke(0, 79, 255,opacity2);
         strokeWeight(3);
         triangle(0, 0, xa-ox, ya-oy, xb-ox, yb-oy)
         pop()
-        strokeWeight(3);
-        fill(0,0,0,opacity2);
+       strokeWeight(3);
+       textSize(20)
+       fill(255, 255, 255, opacity2);
         stroke(0, 79, 255,opacity2);
         text('1', (xa)/2,-(ya)/2-20)
-        textSize(18);
+        textSize(25);
         text('sin y',(xa) +50, (-ya)+ya/2)
         text('cos y', (xa)/2, 20)
         
@@ -562,8 +567,10 @@ function byo(){
 function bstart(){
     start=!start;
 }
-function bExt(){
-    boolExt=!boolExt;
+function bExt() {
+    boolExt = !boolExt;
+    
+
     Xex=130
     ey=ya
     ex=xa

@@ -20,24 +20,24 @@ let blue
 let red
 
 function setup() {
-  let can=createCanvas(1000, 1000)
+  let can=createCanvas(1200, windowHeight*0.92)
   can.parent("can")
 
-  sliderB=createButton("change to slider")
+  sliderB=createButton("Change to slider")
   sliderB.addClass("button")
   sliderB.parent("box")
   sliderB.mousePressed(()=>boolS=!boolS)
 
-  let label=createElement("label","angel =")
+  let label=createElement("label","Angel =")
   label.addClass("label")
   label.parent("box")
 
   slider=createSlider(0,4*PI,0,0.01)
   slider.addClass("slider")
   slider.parent("box")
-  slider.size(250,10)
+  slider.size(250,7)
 
-  rotate=createButton("rotate")
+  rotate=createButton("Rotate mode is on")
   rotate.mousePressed(()=>boolR=!boolR)
   rotate.addClass("button")
   rotate.parent("box")
@@ -71,7 +71,6 @@ function setup() {
 }
 
 function draw() {
-  // background(124, 180, 184)
   clear()
   r= slider2.value()
   Style()
@@ -83,7 +82,8 @@ function draw() {
   strokeWeight(2)
 
   ellipse(0,0,r*2)
-  textSize(40)
+  textSize(30)
+
   line(-width,0,width,0)
   line(0,-height,0,height)
 
@@ -121,7 +121,7 @@ function draw() {
   stroke(255)
   arc(0,0,100,100,angle,0)
     
-  if(boolR){
+  if (boolR) {
     time-=0.01
     angle=map(time,0,10,0,2*PI)
     rotate.style("color",light_blue)  
@@ -132,19 +132,14 @@ function draw() {
     sliderB.style("color",light_blue)
     sliderB.style("background-color",dark)
   }
-  else{angle=radians(-1*input_box.value())}
-
-  fill(dark)
-  textSize(50)
-  text('angle =',-width/2+30,-height/2+50)
+  else {angle = radians(-1 * input_box.value())}
+  
   let anglev=round(degrees(-1*angle))
   while(anglev<0 || anglev>360){
     if(anglev<0)anglev+=360
     if(anglev>360)anglev-=360
   }
-  text(anglev,-width/2+width/4.3,-height/2+50)
-  text("°",-width/2+width/3.1,-height/2+50)
-  textSize(25)
+  textSize(20)
   fill(0)
   text(anglev,50*cos(radians(-1*anglev/2)),50*sin(radians(-1*anglev/2)))
 
