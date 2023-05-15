@@ -3,14 +3,14 @@ const angInc = 0.015 // its the rate it increases its angle every frame rate
 let angle =0
 
 // this are for telling if the buttons are on or off
-let circleButtonIsOn				 = false
-let circlingBallButtonIsOn	 = false
-let makeCircleButtonIsOn		 = false
-let midPointButtonIsOn			 = false
-let ballsButtonIsOn					 = false
-let sinGraphButtonIsOn			 = false
-let cosGraphButtonIsOn			 = false
-let vertCosGraphButtonIsOn	 = false
+let circleButtonIsOn	     = false
+let circlingBallButtonIsOn   = false
+let makeCircleButtonIsOn     = false
+let midPointButtonIsOn	     = false
+let ballsButtonIsOn	     = false
+let sinGraphButtonIsOn	     = false
+let cosGraphButtonIsOn	     = false
+let vertCosGraphButtonIsOn   = false
 let showDerivativeButtonIsOn = false
 let stop                     = false
 
@@ -73,14 +73,14 @@ function draw(){
 	yPoints.unshift(y)
   // its a substitute for if and else
 	// if this                   then                                     else 
-	circleButtonIsOn				 ? showCircle(radius)                        :styleWhenButtonOff("#circleButton")
+	circleButtonIsOn	 ? showCircle(radius)                        :styleWhenButtonOff("#circleButton")
 	circlingBallButtonIsOn	 ? showCirclingBall(x,y,ballRadius)          :styleWhenButtonOff("#circlingBallButton")
-	makeCircleButtonIsOn		 ? makeCircle(x,y,xPoints,yPoints,radius)    :always()
-	midPointButtonIsOn			 ? showMidPoint(x,y,xPoints,yPoints,radius)  :styleWhenButtonOff("#midPointButton")
-	ballsButtonIsOn					 ? showBalls(radius,angle,3,ballRadius)                 :styleWhenButtonOff("#ballsButton")
-	sinGraphButtonIsOn       ? showSinGraph(yPoints)							       :styleWhenButtonOff("#sinGraphButton")
-	cosGraphButtonIsOn       ? showCosGraph(x,xPoints)						       :styleWhenButtonOff("#cosGraphButton")
-	vertCosGraphButtonIsOn   ? showCosVert(xPoints)								       :styleWhenButtonOff("#vertCosGraphButton")
+	makeCircleButtonIsOn	 ? makeCircle(x,y,xPoints,yPoints,radius)    :always()
+	midPointButtonIsOn	 ? showMidPoint(x,y,xPoints,yPoints,radius)  :styleWhenButtonOff("#midPointButton")
+ballsButtonIsOn		       ? showBalls(radius,angle,3,ballRadius)      :styleWhenButtonOff("#ballsButton")
+	sinGraphButtonIsOn       ? showSinGraph(yPoints)                     :styleWhenButtonOff("#sinGraphButton")
+	cosGraphButtonIsOn       ? showCosGraph(x,xPoints)		     :styleWhenButtonOff("#cosGraphButton")
+	vertCosGraphButtonIsOn   ? showCosVert(xPoints)	                     :styleWhenButtonOff("#vertCosGraphButton")
 	showDerivativeButtonIsOn ? derivative(x,y,radius)                    :styleWhenButtonOff("#showDerivativeButton")
 
 	inputAngle = radians(float(-1*input.value()))  // calculates the angle from given input
@@ -185,8 +185,8 @@ const makeCircle = (x, y, xs, ys, radius) =>{
 		noFill()
 		xs.forEach( (value,index)=>vertex(value+radius,ys[index]) )
 	endShape()
-	xs.length >200 ? xs.pop() :null
-	ys.length >200 ? ys.pop() :null
+	xs.length >100 ? xs.pop() :null
+	ys.length >100 ? ys.pop() :null
   
 	discribeText("Did you know you can make circles out of objects moving in a straight line <br> <em>Archimedes</em> knew that")
 	styleWhenButtonOn("#makeCircleButton")
@@ -196,8 +196,8 @@ const showMidPoint = (x, y, xs, ys, radius) => {
 	strokeWeight(2)
 	noFill()
 	line(x,0,0,y)
-	ys.length >300 ? ys.pop(): null
-	xs.length >300 ? xs.pop(): null
+	ys.length >200 ? ys.pop(): null
+	xs.length >200 ? xs.pop(): null
   
 	beginShape()
 			for (let i=0; i<xs.length; i+=10){
