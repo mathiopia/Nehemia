@@ -32,12 +32,28 @@ let balls
 let isballs = false
 let sincirclebutton
 let isSincicle = false
+let describe 
 
 function setup() {
   const width = windowWidth 
   const height = windowHeight 
   let canv = createCanvas(width, height)
   canv.parent('can-container')
+	describe= select("#discription")
+
+
+
+  // cross = createButton("circle")
+  // cross.addClass("mybutton")
+  // cross.mousePressed(showCross)
+  // cross.parent("button_container")
+	cross = makeButton("circle","circle",showCross)
+
+
+  ball = createButton("ball")
+  ball.addClass("mybutton")
+  ball.mousePressed(() => isball = !isball)
+  ball.parent("button_container")
 
   sincirclebutton = createButton("make circle")
   sincirclebutton.addClass("mybutton")
@@ -47,17 +63,6 @@ function setup() {
     coss.length = 0
   })
   sincirclebutton.parent("button_container")
-
-  cross = createButton("circle")
-  cross.addClass("mybutton")
-  cross.mousePressed(showCross)
-  cross.parent("button_container")
-
-
-  ball = createButton("ball")
-  ball.addClass("mybutton")
-  ball.mousePressed(() => isball = !isball)
-  ball.parent("button_container")
 
   mid = createButton("mid point")
   mid.addClass("mybutton")
@@ -69,6 +74,7 @@ function setup() {
       setTimeout(() => is_small = !is_small, 6000)
       setTimeout(() => is_smallL = !is_smallL, 3000)
       setTimeout(() => is_smalle = !is_smalle, 10000)
+			describe.html("if you also take the mid point you also get a circle")
     }
     else {
       is_smallL = !is_smallL
@@ -108,12 +114,23 @@ function setup() {
   derivative.mousePressed(showDerivative)
   derivative.parent("button_container")
 
+	colorPicker = createColorPicker("rgb(234,144,16)");
+  colorPicker.parent("button_container")
+	colorPicker.id("colorPicker")
+
 
 	r = width/6
 	angInc = 0.015
   cr = width / 60
-
 }
+const makeButton = (name,id,actionWhenPressed) => {
+	return  createButton(name)
+	.addClass("mybutton") // to style it as a button
+	.id(id) //to edit it below
+	.mousePressed(actionWhenPressed)  // function call when button is called
+	.parent("button_container")
+}
+
 
 
 function draw() {
@@ -136,26 +153,22 @@ function draw() {
     line(-r, 0, r, 0)
 		stroke("red")
     line(0, -r, 0, r)
+		describe.html("it looks like they are moving in stright lines <br> press the button BALL")
+
 
     cross.style("color", "white")
     cross.style('background-color', "black")
   }
-  if (isDerivative) {
-    strokeWeight(2.5)
-		stroke(255)
-    ellipse(0, 0, r * 2)
-    derivative.style("color", "white")
-    derivative.style('background-color', "black")
-    push()
-    translate(x, y)
-    stroke('blue')
-    line(-r, 0, r, 0)
-    stroke('red')
-    line(0, -r, 0, r)
-    stroke('yellow')
-    rotate(angle)
-    line(0, -r, 0, r)
-    pop()
+  // if (isball) showball()
+	isball? showball() : null
+  if (isSincicle) makeCircle()
+  else {
+    noStroke()
+    fill("blue")
+    ellipse(x, 0, 30)
+    fill('red')
+    ellipse(0, y, 30)
+    // ellipse(0, height)
   }
   if (ismid) {
     stroke(255)
@@ -177,20 +190,28 @@ function draw() {
     mid.style('background-color', "black")
 
   }
+  if (isballs) drawballs()
 
-  if (isball) showball()
   if (isSinGraph) showSinGraph()
   if (isCosGraph) showCosGraph()
   if (isvert) showCosvert()
-  if (isballs) drawballs()
-  if (isSincicle) showSinCircle()
-  else {
-    noStroke()
-    fill("blue")
-    ellipse(x, 0, 30)
-    fill('red')
-    ellipse(0, y, 30)
-    ellipse(0, height)
+  if (isDerivative) {
+    strokeWeight(2.5)
+		stroke(255)
+		noFill()
+    ellipse(0, 0, r * 2)
+    derivative.style("color", "white")
+    derivative.style('background-color', "black")
+    push()
+    translate(x, y)
+    stroke('blue')
+    line(-r, 0, r, 0)
+    stroke('red')
+    line(0, -r, 0, r)
+    stroke('yellow')
+    rotate(angle)
+    line(0, -r, 0, r)
+    pop()
   }
 
   angle -= angInc
@@ -215,8 +236,10 @@ function showball() {
   stroke(24)
   let scale = 1 - (cr / r) / 2
   line(0, 0, x * scale, y * scale)
+  // line(0, 0, x , y )
   line(x, y, 0, y)
   line(x, y, x, 0)
+	describe.html("but really they are drawn as the <em>vertical</em> and <em>horizontal</em> motion of circular moving ball")
   ball.style("color", "white")
   ball.style('background-color', "black")
 }
@@ -226,39 +249,42 @@ function drawballs() {
   noFill()
   ellipse(0, 0, r * 2)
   let num
-  num = 360 / 5
+  num = 360/3
 
-  for (let i = 0; i < 360; i += num) {
+  for (let i = num; i < 360; i += num) {
+		noFill()
     push()
     angleMode(DEGREES)
     rotate(i)
     let x2 = r * cos(degrees(angle) - i)
     let y2 = r * sin(degrees(angle) - i)
-    let redish = map(i, 0, 400, 0, 255)
+    let redish = map(i, 0, 360, 0, 255)
     let greenish = map(i, 0, 50, 0, 255)
     let blueish = map(i, 0, 10, 0, 255)
 
     colorMode(HSB, 255)
     strokeWeight(2)
     stroke(255)
-    fill(redish, greenish, blueish)
+    // fill(redish, greenish,255)
 
-    stroke(redish, greenish, blueish)
+    stroke(redish, 200, 255)
     line(-r, 0, r, 0)
-    line(0, -r, 0, r)
+    // line(0, -r, 0, r)
 
-    noStroke()
+    // noStroke()
+		noFill()
     ellipse(x2, 0, 20)
-    ellipse(0, y2, 20)
+    // ellipse(0, y2, 20)
 
     noFill()
     ellipse(0, 0, r * 2)
     angleMode(RADIANS)
     pop()
+  }
     balls.style("color", "white")
     balls.style('background-color', "black")
+		describe.html("the original balls track the ball's verstical and horizontal positon but if we track the ball's distance in other angles it looks something like this")
 
-  }
 }
 
 function showSinGraph() {
@@ -339,7 +365,7 @@ function showSmallL() {
   line(0, 0, x / 2, y / 2)
 }
 
-function showSinCircle() {
+function makeCircle() {
 
   stroke(180)
   line(0, r, r + r, r)
@@ -350,8 +376,8 @@ function showSinCircle() {
   ellipse(0, y, 30)
   fill("blue")
   ellipse(x + r, r, 30)
-  stroke(255)
-  ellipse(x + r, y, 10)
+  // stroke(255)
+  // ellipse(x + r, y, 10)
 
   stroke('blue')
   line(x + r, y, x + r, r)
@@ -370,36 +396,42 @@ function showSinCircle() {
     coss.pop()
     sins.pop()
   }
+	describe.html("tramel Archimedis  from this balls moving in stright line can create circle")
   sincirclebutton.style("color", "white")
   sincirclebutton.style('background-color', "black")
 }
 
 function Style() {
 
-  cross.style("color", "var(--carrot)")
+  cross.style("color", colorPicker.color())
   cross.style('background-color', "var(--transparent)")
 
-  derivative.style("color", "var(--carrot)")
+  derivative.style("color", colorPicker.color())
   derivative.style('background-color', "var(--transparent)")
 
-  ball.style("color", "var(--carrot)")
+  ball.style("color", colorPicker.color())
   ball.style('background-color', "var(--transparent)")
 
-  sinGraph.style("color", "var(--carrot)")
+  sinGraph.style("color", colorPicker.color())
   sinGraph.style('background-color', "var(--transparent)")
 
-  cosGraph.style("color", "var(--carrot)")
+  cosGraph.style("color", colorPicker.color())
   cosGraph.style('background-color', "var(--transparent)")
 
-  cosvert.style("color", "var(--carrot)")
+  cosvert.style("color", colorPicker.color())
   cosvert.style('background-color', "var(--transparent)")
 
   mid.style("background-color", "var(--transparent)")
-  mid.style('color', "var(--carrot)")
+  mid.style('color', colorPicker.color())
 
   sincirclebutton.style("background-color", "var(--transparent)")
-  sincirclebutton.style('color', "var(--carrot)")
+  sincirclebutton.style('color', colorPicker.color())
 
   balls.style("background-color", "var(--transparent)")
-  balls.style('color', "var(--carrot)")
+  balls.style('color', colorPicker.color())
+}
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+	r = width/6
+  cr = width / 60
 }

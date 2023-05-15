@@ -6,7 +6,8 @@
 	--dark:rgb(0,0,0);
 }
 .mybutton{
-  background-color: var(--light-blue);
+  background-color: var(--transparent);
+	color: var(--carrot);
   display:flex;
   margin:10px;
   padding:10px 20px;
@@ -48,6 +49,14 @@ p{
   color:var(--carrot);
   font-family: Georgia;
  }
+#discription{
+	font-size: 16px;
+  font-family: Firacode;
+	color: white;
+}
+#discription em{
+	color: cyan;
+}
  .t1{
   color:rgb(255,255,255);
   font-size:3ch;
@@ -58,6 +67,17 @@ p{
   height: 100%;
   display:grid;
  }
+#colorPicker{
+	margin: 10px;
+	background-color:var(--transparent);
+	border-radius: 5px;
+}
+#input{
+	padding: 0px;
+  background-color: var(--transparent);
+	color: var(--carrot);
+	font-size: 30;
+}
 html body{
   margin: 0px;
   height: 100%;
