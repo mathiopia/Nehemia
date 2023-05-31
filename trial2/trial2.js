@@ -18,10 +18,12 @@ let mid_gray
 let carrot
 let blue
 let red
+let colorPicker
 
 function setup() {
-  let can=createCanvas(1200, windowHeight*0.92)
+  let can=createCanvas(windowWidth, windowHeight)
   can.parent("can")
+
 
   sliderB=createButton("Change to slider")
   sliderB.addClass("button")
@@ -35,7 +37,7 @@ function setup() {
   slider=createSlider(0,4*PI,0,0.01)
   slider.addClass("slider")
   slider.parent("box")
-  slider.size(250,7)
+  // slider.size(200,3)
 
   rotate=createButton("Rotate mode is on")
   rotate.mousePressed(()=>boolR=!boolR)
@@ -51,28 +53,24 @@ function setup() {
   blue= color(0, 79, 255)
   red= color(255, 32, 110)
 
-  let label2=createElement("label","zoom =")
-  label2.addClass("label")
-  label2.parent("box")
-
-  slider2=createSlider(width/10,width/2,width/4)
-  slider2.addClass("slider")
-  slider2.parent("box")
-  slider2.size(250,10)
 
   input_box=createInput("0")
   input_box.addClass("label")
   input_box.parent("box")
 
+	colorPicker = createColorPicker('var(-carrot)');
+  colorPicker.addClass("button")
+  colorPicker.parent("box")
+
 
   cr = width / 40
+	r  = width/ 6
 
 
 }
 
 function draw() {
   clear()
-  r= slider2.value()
   Style()
   translate(width/2,height/2)
   let x= r*cos(angle)
@@ -124,13 +122,13 @@ function draw() {
   if (boolR) {
     time-=0.01
     angle=map(time,0,10,0,2*PI)
-    rotate.style("color",light_blue)  
-    rotate.style("background-color",dark)
+    rotate.style("color","white")  
+    rotate.style("background-color","black")
   }
   else if(boolS){
     angle=-1*slider.value()
-    sliderB.style("color",light_blue)
-    sliderB.style("background-color",dark)
+    sliderB.style("color","white")
+    sliderB.style("background-color","black")
   }
   else {angle = radians(-1 * input_box.value())}
   
@@ -145,8 +143,13 @@ function draw() {
 
 }
 function Style(){
-  rotate.style("background-color",light_blue)  
-  rotate.style("color",dark)
-  sliderB.style("background-color",light_blue)
-  sliderB.style("color",dark)
+  rotate.style("background-color","rgba(0,0,0,0)")  
+  rotate.style("color",colorPicker.color())
+  sliderB.style("background-color","rgba(0,0,0,0)")
+  sliderB.style("color",colorPicker.color())
+}
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  cr = width / 40
+	r  = width/ 4
 }

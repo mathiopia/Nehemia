@@ -32,11 +32,4 @@ function draw() {
     circle(x, y, r * 2)
     angle[i] += angleV[i]
   }
-  /**
-   * 
-   * @param {number} item number to squre
-   * @returns the squre
-   */
-  const me = (item) => item ^ 2
-  console.log(me("4"))
 }
