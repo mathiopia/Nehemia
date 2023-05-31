@@ -18,26 +18,28 @@ let mid_gray
 let carrot
 let blue
 let red
+let colorPicker
 
 function setup() {
-  let can=createCanvas(1000, 1000)
+  let can=createCanvas(windowWidth, windowHeight)
   can.parent("can")
 
-  sliderB=createButton("change to slider")
+
+  sliderB=createButton("Change to slider")
   sliderB.addClass("button")
   sliderB.parent("box")
   sliderB.mousePressed(()=>boolS=!boolS)
 
-  let label=createElement("label","angel =")
+  let label=createElement("label","Angel =")
   label.addClass("label")
   label.parent("box")
 
   slider=createSlider(0,4*PI,0,0.01)
   slider.addClass("slider")
   slider.parent("box")
-  slider.size(250,10)
+  // slider.size(200,3)
 
-  rotate=createButton("rotate")
+  rotate=createButton("Rotate mode is on")
   rotate.mousePressed(()=>boolR=!boolR)
   rotate.addClass("button")
   rotate.parent("box")
@@ -51,29 +53,24 @@ function setup() {
   blue= color(0, 79, 255)
   red= color(255, 32, 110)
 
-  let label2=createElement("label","zoom =")
-  label2.addClass("label")
-  label2.parent("box")
-
-  slider2=createSlider(width/10,width/2,width/4)
-  slider2.addClass("slider")
-  slider2.parent("box")
-  slider2.size(250,10)
 
   input_box=createInput("0")
   input_box.addClass("label")
   input_box.parent("box")
 
+	colorPicker = createColorPicker('var(-carrot)');
+  colorPicker.addClass("button")
+  colorPicker.parent("box")
 
 
-  cr=width/40
+  cr = width / 40
+	r  = width/ 6
+
 
 }
 
 function draw() {
-  // background(124, 180, 184)
   clear()
-  r= slider2.value()
   Style()
   translate(width/2,height/2)
   let x= r*cos(angle)
@@ -83,7 +80,8 @@ function draw() {
   strokeWeight(2)
 
   ellipse(0,0,r*2)
-  textSize(40)
+  textSize(30)
+
   line(-width,0,width,0)
   line(0,-height,0,height)
 
@@ -121,37 +119,37 @@ function draw() {
   stroke(255)
   arc(0,0,100,100,angle,0)
     
-  if(boolR){
+  if (boolR) {
     time-=0.01
     angle=map(time,0,10,0,2*PI)
-    rotate.style("color",light_blue)  
-    rotate.style("background-color",dark)
+    rotate.style("color","white")  
+    rotate.style("background-color","black")
   }
   else if(boolS){
     angle=-1*slider.value()
-    sliderB.style("color",light_blue)
-    sliderB.style("background-color",dark)
+    sliderB.style("color","white")
+    sliderB.style("background-color","black")
   }
-  else{angle=radians(-1*input_box.value())}
-
-  fill(dark)
-  textSize(50)
-  text('angle =',-width/2+30,-height/2+50)
+  else {angle = radians(-1 * input_box.value())}
+  
   let anglev=round(degrees(-1*angle))
   while(anglev<0 || anglev>360){
     if(anglev<0)anglev+=360
     if(anglev>360)anglev-=360
   }
-  text(anglev,-width/2+width/4.3,-height/2+50)
-  text("°",-width/2+width/3.1,-height/2+50)
-  textSize(25)
+  textSize(20)
   fill(0)
   text(anglev,50*cos(radians(-1*anglev/2)),50*sin(radians(-1*anglev/2)))
 
 }
 function Style(){
-  rotate.style("background-color",light_blue)  
-  rotate.style("color",dark)
-  sliderB.style("background-color",light_blue)
-  sliderB.style("color",dark)
+  rotate.style("background-color","rgba(0,0,0,0)")  
+  rotate.style("color",colorPicker.color())
+  sliderB.style("background-color","rgba(0,0,0,0)")
+  sliderB.style("color",colorPicker.color())
+}
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  cr = width / 40
+	r  = width/ 4
 }
