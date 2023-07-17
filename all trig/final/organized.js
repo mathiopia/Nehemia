@@ -1,3 +1,4 @@
+
 const angInc = 0.01 // its the rate it increases its angle every frame rate
 
 let angle =0
@@ -14,6 +15,7 @@ let vertCosGraphButtonIsOn	 = false
 let showDerivativeButtonIsOn = false
 let isevenButtonIsOn         = false
 let isAllTrigButtonOn        = false
+let isquareButtonOn          = false
 
 let stop                     = false
 
@@ -21,6 +23,10 @@ let input
 
 let xPoints = [] // for collecting value of x's
 let yPoints  = [] // for collecting value of y's
+let nextX =[]
+let nextY =[]
+let xMid =[]
+let yMid =[]
 
 
 // this is where things start it runs only ones
@@ -43,11 +49,12 @@ function setup(){
 
 	const cosGraphButton     = makeButton("cos Graph","cosGraphButton",()=>{cosGraphButtonIsOn=!cosGraphButtonIsOn})
 
-	const vertCosGraphButton = makeButton("vertcal cos", "vertCosGraphButton",()=>{vertCosGraphButtonIsOn=!vertCosGraphButtonIsOn})
+	// const vertCosGraphButton = makeButton("vertcal cos", "vertCosGraphButton",()=>{vertCosGraphButtonIsOn=!vertCosGraphButtonIsOn})
 
 	const showDerivativeButton = makeButton("derivative","showDerivativeButton",()=>{showDerivativeButtonIsOn=!showDerivativeButtonIsOn})
 	const isEven               = makeButton("Who is even","isEven",()=>{isevenButtonIsOn=!isevenButtonIsOn})
 	const isall                = makeButton("show All trig","allTrig",()=>{isAllTrigButtonOn=!isAllTrigButtonOn})
+	const issquare             = makeButton("sin^2 + cos^2 = 1","square",()=>{isquareButtonOn=!isquareButtonOn})
 
 	const stopButton           = makeButton("Stop","stopButton",()=>{stop=!stop})
 	input = makeinputBox("45","#input")
@@ -71,27 +78,30 @@ function draw(){
 		ellipse(x,0,ballRadius)
 		fill("red")
 		ellipse(0,y,ballRadius)
-    styleWhenButtonOff("#makeCircleButton")
+		styleWhenButtonOff("#makeCircleButton")
 
-		xPoints.length >300 ? xPoints.pop() :null
-		yPoints.length >300 ? yPoints.pop() :null
+		xPoints.length >500 ? xPoints.pop() :null
+		yPoints.length >500 ? yPoints.pop() :null
+		nextX.length  =0 
+		nextY.length  =0 
 	}
 
 	xPoints.unshift(x) // adds value of x to the front of the list 
 	yPoints.unshift(y)
-  // its a substitute for if and else
+
 	// if this                   then                                     else 
 	circleButtonIsOn				 ? showCircle(radius)                        :styleWhenButtonOff("#circleButton")
 	circlingBallButtonIsOn	 ? showCirclingBall(x,y,ballRadius)          :styleWhenButtonOff("#circlingBallButton")
-	makeCircleButtonIsOn		 ? makeCircle(x,y,xPoints,yPoints,radius)    :always()
+	makeCircleButtonIsOn		 ? makeCircle(x,y,radius)                    :always()
 	midPointButtonIsOn			 ? showMidPoint(x,y,xPoints,yPoints,radius)  :styleWhenButtonOff("#midPointButton")
 	ballsButtonIsOn					 ? showBalls(radius,angle,3,ballRadius)      :styleWhenButtonOff("#ballsButton")
 	sinGraphButtonIsOn       ? showSinGraph(yPoints)							       :styleWhenButtonOff("#sinGraphButton")
 	cosGraphButtonIsOn       ? showCosGraph(x,xPoints)						       :styleWhenButtonOff("#cosGraphButton")
-	vertCosGraphButtonIsOn   ? showCosVert(xPoints)								       :styleWhenButtonOff("#vertCosGraphButton")
 	showDerivativeButtonIsOn ? derivative(x,y,radius)                    :styleWhenButtonOff("#showDerivativeButton")
 	isevenButtonIsOn         ? isEven(x,y,angle,radius,ballRadius)       :styleWhenButtonOff("#isEven")
-	isAllTrigButtonOn        ? allTrig(x,y,ballRadius)                              :styleWhenButtonOff("#allTrig")
+	isAllTrigButtonOn        ? allTrig(x,y,ballRadius)                   :styleWhenButtonOff("#allTrig")
+	if(isquareButtonOn)      square(x,y);                          else { styleWhenButtonOff("#square"); xMid.length =0 ; yMid.length=0 }
+	if(!midPointButtonIsOn && !sinGraphButtonIsOn && !cosGraphButtonIsOn) { xPoints.length=0;yPoints.length=0 }
 
 	inputAngle = radians(float(-1*input.value()))  // calculates the angle from given input
 	stop ? (()=>{angle =inputAngle; styleWhenButtonOn("#stopButton")})() : (()=>{angle-=angInc;styleWhenButtonOff("#stopButton")})()
@@ -145,7 +155,7 @@ function windowResized () { // is called when the window is resized
 const showCircle = radius =>{
 	noFill()
 	strokeWeight(2.5) // sets the thickness
-	stroke("white")
+	stroke(255,50)
 	ellipse(0,0,2*radius)
 	stroke("blue")
 	line(-radius , 0, radius, 0)
@@ -160,16 +170,16 @@ const showCircle = radius =>{
 const showCirclingBall = (x, y, ballradius) =>{
 	noStroke()
 	fill("orange")
-	ellipse(x,y,ballradius,ballradius)
+	ellipse(x,y,ballradius)
   
 	strokeWeight(4)
-	stroke(24)
-	line(0, 0, x, y) // to the middle
-	line(x, y, 0, y) // from the ball to vertical line
-	line(x, y, x, 0) // from the ball to horizontal line
+	stroke(50)
+	line(0, 0, x, y) 
+	line(x, y, 0, y) 
+	line(x, y, x, 0) 
 
 	noFill()
-	stroke('white')
+	stroke(255,50)
 	strokeWeight(2)
 	arc(0,0,100,100,angle,0)
 	let angleRad = round(degrees(-1*angle))
@@ -177,6 +187,7 @@ const showCirclingBall = (x, y, ballradius) =>{
 		if(angleRad<0) angleRad+=360
 		if(angleRad>360) angleRad-=360
 	}
+	stroke(255,200)
 	textSize(25)
 	text(angleRad,50*cos(radians(-1*angleRad/2)),50*sin(radians(-1*angleRad/2)))
   
@@ -185,32 +196,49 @@ const showCirclingBall = (x, y, ballradius) =>{
   
 	styleWhenButtonOn("#circlingBallButton")
 }
-const makeCircle = (x, y, xs, ys, radius) =>{
+const makeCircle = (x, y, radius) =>{
+
+	// not recomended to see with make circle
+	showDerivativeButtonIsOn=false	
+	isevenButtonIsOn = false
+	isAllTrigButtonOn =false
+	isquareButtonOn  = false
+	ballsButtonIsOn = false
+
 	stroke(180)
 	strokeWeight(2)
+	let slope = -y/x
+	let theta = atan(slope)
 
-	line(0, radius, 2*radius, radius)
-	line(0, radius, 0, -radius)
-  
-	noStroke()
-	fill("red")
-	ellipse(0,y,radius/10)
-	fill("blue")
-	ellipse(x+radius,radius,radius/10)
-  
-	stroke("red")
-	line(0, y, x+radius, y)
-	stroke("blue")
-	line(x+radius , y, x+radius, radius)
-
+	let d = radius*3/2
+	nextX.unshift ( x      + (d*cos(theta)*(-x/abs(x))) )
+	nextY.unshift ( 0      + (d*sin(theta)*(-x/abs(x))) )
+	line(x,0,nextX[0],nextY[0])
 	
+	noStroke()
+	rectMode(RADIUS)
+	fill("red")
+	rect(0,y,radius/30,radius/15)
+	fill("blue")
+	rect(x,0,radius/15,radius/30)
+	noFill()
+	stroke(255,50)
+	rect(0,0,radius,radius/30)
+	rect(0,0,radius/30,radius)
+
+  
 	beginShape()
 		stroke("yellow")
 		noFill()
-		xs.forEach( (value,index)=>vertex(value+radius,ys[index]) )
+		for(let i=0;i<nextX.length;i++){
+      vertex(nextX[i],nextY[i]) 
+		}
 	endShape()
-	ys.length >100 ? ys.pop(): null
-	xs.length >100 ? xs.pop(): null
+
+	nextX.length >500 ? nextX.pop(): null
+	nextY.length >500 ? nextY.pop(): null
+	xPoints.length >500 ? xPoints.pop() :null
+	yPoints.length >500 ? yPoints.pop() :null
   
 	discribeText("Did you know you can make circles out of objects moving in a straight line <br> <em>Archimedes</em> knew that")
 	styleWhenButtonOn("#makeCircleButton")
@@ -257,7 +285,6 @@ const showBalls =(radius,angle,num,ballRadius)=> {
 			line(0,-radius,0,radius) // 90 deg oposite of the privious line
 			ellipse(xi,0,ballRadius)
 			ellipse(0,yi,ballRadius)
-      //
 		pop()
 	}
 		angleMode(RADIANS)
@@ -267,14 +294,16 @@ const showBalls =(radius,angle,num,ballRadius)=> {
 		discribeText(s)
 }
 const showSinGraph = ys =>{
+	circleButtonIsOn = true
 	 beginShape()
 		 let sintime =0
 		 const skipTime = 10
 		 noFill()
 		 stroke("red")
 		 strokeWeight(2)
-		 for(let i=0; i<ys.length;i+=skipTime){
+		 for(let i=1; i<ys.length;i+=skipTime){
 			 vertex(sintime,ys[i])
+			 // animS.line(i,90,sintime-skipTime,ys[i-1],sintime,ys[i])
 			 sintime+=skipTime
 		 }
 	 endShape()
@@ -325,10 +354,13 @@ const showCosVert = xs =>{
 	styleWhenButtonOn("#vertCosGraphButton")
 }
 const derivative = (x,y,radius) =>{
+
+	circlingBallButtonIsOn=true
+	circleButtonIsOn =true
+
 	strokeWeight(2.5)
 	stroke(255)
 	noFill()
-	ellipse(0,0,2*radius)
 	push()
 		translate(x,y)
 		stroke("blue")
@@ -344,6 +376,8 @@ const derivative = (x,y,radius) =>{
 	styleWhenButtonOn("#showDerivativeButton")
 }
 const isEven = (x,y,angle,radius,ballRadius) =>{
+	circlingBallButtonIsOn =false
+	circleButtonIsOn = true
 	const negetiveAngle = - angle
 	noFill()
 	strokeWeight(5)
@@ -352,17 +386,19 @@ const isEven = (x,y,angle,radius,ballRadius) =>{
 
 	strokeWeight(2)
 	line(0, 0, x, y) // to the middle
-	// line(x, y, 0, y) // from the ball to vertical line
-	// line(x, y, x, 0) // from the ball to horizontal line
+	stroke(0,255,0,50)
+	line(x, y, 0, y) // from the ball to vertical line
+	line(x, y, x, 0) // from the ball to horizontal line
 
 	const x1 = radius*cos(negetiveAngle)
 	const y1 = radius*sin(negetiveAngle)
 
-	stroke('yellow')
+	stroke(255,255,0,50)
+	line(x1, y1, 0, y1) // from the ball to vertical line
+	line(x1, y1, x1, 0) // from the ball to horizontal line
 
+	stroke('yellow')
 	line(0, 0, x1, y1) // to the middle
-	// line(x1, y1, 0, y1) // from the ball to vertical line
-	// line(x1, y1, x1, 0) // from the ball to horizontal line
 
 	strokeWeight(5)
 	ballNegetive     = ellipse(x1,y1,ballRadius)
@@ -370,20 +406,21 @@ const isEven = (x,y,angle,radius,ballRadius) =>{
 	fill('cyan')
 	ballvertNegetive = ellipse(0,y1,ballRadius)
 
-	noFill()
 	strokeWeight(2)
 	stroke('green')
-	arc(0,0,100,100,angle,0)
+	noFill()
+	arc(0,0,150,150,angle,0)
 	let angleRad = round(degrees(-1*angle))
 	while(angleRad<0 || angleRad>360){
 		if(angleRad<0) angleRad+=360
 		if(angleRad>360) angleRad-=360
 	}
 	textSize(25)
-	text(angleRad,50*cos(radians(-1*angleRad/2)),50*sin(radians(-1*angleRad/2)))
+	text(angleRad,75*cos(radians(-1*angleRad/2)),75*sin(radians(-1*angleRad/2)))
 
 	stroke('yellow')
-	arc(0,0,75,75,0,negetiveAngle)
+	// fill("yellow")
+	arc(0,0,50,50,0,negetiveAngle)
 	let angleRad2 = round(degrees(-1*negetiveAngle))
 	while(angleRad2>0 || angleRad2< -360){
 		if(angleRad2>0) angleRad2-=360
@@ -396,12 +433,15 @@ const isEven = (x,y,angle,radius,ballRadius) =>{
   
 }
 const allTrig = (x,y,ballRadius)=>{
-	strokeWeight(3)
-	textSize(ballRadius)
-	// noFill()
+	circleButtonIsOn = true
+	circlingBallButtonIsOn = true
+
+	strokeWeight(2)
+	textSize(25)
   //tan
   stroke('blue')
   line(x,y,(y*y+x*x)/x,0)
+
   fill(0)
   text("tan",(x+(y*y+x*x)/x)/2,y/2)
   //cot
@@ -427,4 +467,53 @@ const allTrig = (x,y,ballRadius)=>{
 
 styleWhenButtonOn("#allTrig")
 }
+const square = (x,y) => {
 
+	circleButtonIsOn       = true
+	circlingBallButtonIsOn = true
+	isAllTrigButtonOn      = false
+	ballsButtonIsOn        = false
+	isevenButtonIsOn       = false
+
+	styleWhenButtonOn("#square")
+	stroke("yellow")
+	strokeWeight(1)
+
+	fill("green")
+
+	let xval=x*cos(angle)*cos(angle)+(x-x*cos(angle)*cos(angle))/2;
+	let yval=x*cos(angle)*sin(angle)+(y-x*cos(angle)*sin(angle))/2;
+
+	textSize(18)
+	fill("blue")
+  text("cos^2(x)",x*cos(angle)*cos(angle)/2,x*cos(angle)*sin(angle)/2);
+	fill("red")
+  text("sin^2(x)",xval,yval);
+
+  let xmid = x *cos(angle)*cos(angle)
+	let ymid = x * cos(angle)*sin(angle)
+
+	xMid.unshift(xmid)
+	yMid.unshift(ymid)
+
+	strokeWeight(2)
+  line(x,0,xmid,ymid) // line to mid
+
+	stroke("blue")
+	line(0,0,xmid,ymid) // cos^2 line
+	stroke("red")
+	line(x,y,xmid,ymid) // sin^2 line
+
+	beginShape()
+	noFill()
+	stroke("green")
+	for(let i =0 ; i<=xMid.length;i++){
+		vertex(xMid[i],yMid[i])
+	}
+	endShape()
+	if(xMid.length>500){
+		xMid.pop()
+		yMid.pop()
+	}
+
+}
